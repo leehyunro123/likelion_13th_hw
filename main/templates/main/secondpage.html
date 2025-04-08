@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/project.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIKELION 13th Django Session</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .body-container {
+            background-color: #111;
+            color: #fff;
+            margin: 20px;
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            gap: 40px;
+            background-color:firebrick;
+            font-size: 18px;
+        }
+
+        .navbar-link {
+            color:#fff;
+            font-size: 30px;
+        }
+
+        .navbar-link:hover {
+            color: #111;
+        }
+
+        .contents {
+            font-size: 50px;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body class="body-container">
+    <nav class="navbar-container">
+        <!-- mainpage 링크 연결-->
+        <a class="navbar-link" href="{% url 'mainpage' %}">레전드 정리</a>
+        <!-- secondpage 링크 연결-->
+        <a class="navbar-link" href="{% url 'secondpage' %}">비밀일기장</a>
+    </nav>
+    <h1 class="contents">멋쟁이사자처럼 13기 이현노</h1>
+    <div class="contents">! 절대 비밀 !</div>
+    <div>🦁 멋쟁이 아사의 일기장🦁 </div>
+    <ul>
+        <li>벚꽃이 핀 요즈음 비가와서 어린 꽃잎들이 떨어진 것을 보고 내 봄날도 일찍 저버리진 않을까하는 쓸데없는 생각에 잠겼다.</li>
+        <li>꽃이 지고나서야 봄날인줄 알았던가, 후회하고 돌아보지 않도록 지금 나의 찬란한 봄을 만끽하러 나는 오늘의 수업을 째야겠다.</li>
+        <li>여름이었다.</li>
+    </ul>
+    <div>상상일지</div>
+    <ul>
+        <li>나는 언제 마지막 숨을 내뱉고 영원한 고요 속으로 가라앉을까. 마치 로뎅의 생각하는 사람 작품은 나에게 영감을 얻은 듯한 그런 자세를 취하고 있었다.</li>
+        <li>진지하게 생각해보자. 과연 지금 2025년 25살 먹은 나는 2100년을 바라볼까? 난 아니라고 생각한다.</li>
+        <li>인류의 발전 속도는 이루 말할 수 없이 빠르게 발전하고있다. 2010년 삼성에서는 첫 스마트폰인 s1 시리즈를 출시하였다.</li>
+        <li>2010년이다. 지드래곤의 하트브레이커와 1박2일이 방영되고 있는 시점이란말이다. 15년이라고 생각한다면 꽤나 멀게 느껴질 수도 있다. 그렇다면 다른 예시를 살펴보자.</li>
+        <li>CHAT GPT가 미야자키 하야오 뺨을 후려치며 지브리체를 그리고 있는 요즘, 챗지피티는 2023년에 첫 출시가 이루어졌다.</li>
+        <li>머리가 아파온다. 1년 조금 넘었다는게 말이 되는가? 지금 ndrims에 있는 내 담당교수님 성함을 챗지피티로 바꿀 마당에.</li>
+        <li>이렇듯 인류의 발전은 지수함수맹키로 하늘에 똥침을 할 기세로 나아가고있다. 내가 인류의 기대 수명은 앞으로 300살이라고 생각하는 이유 중 하나이다.</li>
+        <li>그렇다면 인류의 존속은 어떻게 되는가? 2300년에 니가 빅뱅을 알어?를 시전할 수 있는가에 대한 의문이다.</li>
+        <li>답은 NO이다.</li>
+        <li>우리는 아니 인류는 현재를 기점으로 마지막 세대를 장식하며 우주로 뻗어나가 행성 간 이동을 하며 발전된 기술을 만끽하며 우주의 세균처럼 번식해나갈지, 멸종하던지 둘 중에 하나의 미래를 그리게 될 것이다.</li>
+        <li>그렇다면 우리는 그 미래를 대비할 필요가 있다. 지금 하고 있는 것들은 기대수명 300살에 기댄다면 걸음마를 떼고 있다는 것이다.</li>
+        <li>[우리 애가 대학교를 졸업했어요!] {???: 어구 그쪽 애기는 걸음마 다 뗐네!} 지금 이게 웃긴다면 2300살에 어렴풋이 기억하며 나를 영적인 존재였다라고 회상할 것이다.</li>
+        <li>지금 하고 있는 것이 아무것도 아니라는 것이 아니다. 이러한 생각을 무의식 속에라도 넣어놓고 살아간다는건 이미 남들과 다른 삶을 그려나갈 수 있다는 사실을 알았으면한다. 이상.</li>
+        <li>-이현노의 상상일지-</li>
+    </ul>
+    {% load static %}
+    <img src="{% static 'images/images.png' %}" alt="카리나" width="500px">
+</body>
+
+</html> 
