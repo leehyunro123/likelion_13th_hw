@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <img src="{% static 'images/image.png' %}" alt="image" width="100px">
+    <h1 class="contents">2025 멋쟁이사자처럼 {{generation}}기</h1>
+    <div class="contents">Welcome Django!</div>
+    <div>🦁 머쩅이 사자의 일기짱🦁 </div>
+    <ul>
+        <li>오늘의 날씨 : {{info.weather}}</li>
+        <li>오늘의 기분 : {{info.feeling}}</li>
+        <li>{{info.note}}</li>
+    </ul>
+    <div>🦁 VS Code 단축키🦁 </div>
+    <ul>
+        {% for s in shortKeys %}
+        <li>{{s}}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
