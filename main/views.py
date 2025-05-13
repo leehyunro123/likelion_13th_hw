@@ -22,7 +22,13 @@ def mainpage(request):
 
 def secondpage(request):
     blogs = Blog.objects.all()
-    return render(request, 'main/secondpage.html', {'blogs': blogs})
+    posts = Post.objects.all()
+    context = {
+        'blogs': blogs,
+        'posts': posts,
+    }
+    return render(request, 'main/secondpage.html', context)
+
 
 def new_blog(request):
     blogs = Blog.objects.all()
@@ -30,7 +36,7 @@ def new_blog(request):
 
 def detail(request, id):
     blog = get_object_or_404(Blog, pk=id)
-    return render(request, 'main/detail.html', {'blog': blog})
+    return render(request, 'main/detail.html', {'blog': blog},)
 
 def create(request):
     new_blog = Blog()
@@ -59,3 +65,44 @@ def update(request, id):
 
     update_blog.save()
     return redirect('main:detail', update_blog.id)
+
+def create2(request):
+    new_post = Post()
+
+    new_post.title = request.POST['title']
+    new_post.writer = request.POST['writer']
+    new_post.content = request.POST['content']
+    new_post.pub_date = timezone.now()
+    new_post.image = request.FILES.get('image')
+
+    new_post.save()
+
+    return redirect('main:detail', new_post.id)
+
+def new_post(request):
+    return render(request, 'main/post.html')
+
+def detail2(request, id):
+    post = get_object_or_404(Post, pk=id)
+    post.views += 1
+    post.save(update_fields=['views'])
+    return render(request, 'main/detail2.html', {'post': post},)
+
+def edit2(request, id):
+    edit_post = Post.objects.get(pk=id)
+    return render(request, 'main/edit2.html', {'post': edit_post})
+
+def update2(request, id):
+    update_post = Post.objects.get(pk=id)
+    update_post.title = request.POST['title']
+    update_post.writer = request.POST['writer']
+    update_post.content = request.POST['content']
+    update_post.pub_date = timezone.now()
+    update_post.image = request.FILES.get('image')
+    update_post.views = request.POST['views']
+    update_post.save()
+
+def delete(request, id):
+    delete_post= Post.objects.get(pk=id)
+    delete_post.delete()
+    return redirect('main:secondpage')
