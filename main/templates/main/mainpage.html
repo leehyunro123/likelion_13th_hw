@@ -1,81 +1,20 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <img src="{% static 'images/image.png' %}" alt="image" width="100px">
+    <h1 class="contents">2025 멋쟁이사자처럼 {{generation}}기</h1>
+    <div class="contents">Welcome Django!</div>
+    <div>🦁 머쩅이 사자의 일기짱🦁 </div>
+    <ul>
+        <li>오늘의 날씨 : {{info.weather}}</li>
+        <li>오늘의 기분 : {{info.feeling}}</li>
+        <li>{{info.note}}</li>
+    </ul>
+    <div>🦁 VS Code 단축키🦁 </div>
+    <ul>
+        {% for s in shortKeys %}
+        <li>{{s}}</li>
+        {% endfor %}
+    </ul>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2주차 세션 정리</title>
-    <style>
-        a {
-            text-decoration: none;
-        }
-
-        .body-container {
-            background-color:lightblue;
-            color:lightcoral;
-            margin: 20px;
-        }
-
-        .navbar-container {
-            display: flex;
-            align-items: center;
-            padding-left: 20px;
-            gap: 40px;
-            background-color:lightcoral;
-            font-size: 18px;
-        }
-
-        .navbar-link {
-            color:aqua;
-            font-size: 30px;
-        }
-
-        .navbar-link:hover {
-            color: #111;
-        }
-
-        .contents {
-            font-size: 50px;
-        }
-        .list{
-            font-size: 20px;
-        }
-    </style>
-</head>
-
-<body class="body-container">
-    <nav class="navbar-container">
-        <!-- mainpage 링크 연결-->
-        <a class="navbar-link" href="{% url 'mainpage' %}">레전드 정리</a>
-        <!-- secondpage 링크 연결-->
-        <a class="navbar-link" href="{% url 'secondpage' %}">비밀 일기장</a>
-    </nav>
-    <h1 class="contents"><strong>2주차</strong> 세션 정리</h1>
-    <h2>BE_황채현 선배님</h2>
-    <div> </div>
-    <ol>
-        <li class="list">초기세팅</li>
-        <ul>
-            <li>gitigore 사용: db와 media 같은 git에서 충돌날 수 있는 파일들을 충돌나지 않도록 해줌</li>
-        </ul>
-        <li class="list">주요 요약</li>
-        <ul>
-            <li>HTML 페이지와 view를 연결: HTML페이지를 유저에게 보여주기 위함</li>
-            <li>url 작성해야함</li>
-            <li>웹페이지를 보기 위해 python manage.py runserver를 터미널에 입력</li>
-        </ul>
-        <li class="list">다른 페이지 만들기</li>
-        <ul>
-            <li>HTML 링크 연결: href(하이퍼텍스트 참조)를 이용하여 페이지간 링크 연결</li>
-        </ul>
-        <li class="list">template 언어</li>
-        <ul>
-            <li>조건문 형태: 2주차 세션 내용 참조</li>
-            <li>반복문 형태: 2주차 세션 내용 참조</li>
-            <li>템플릿 필터: 템플릿 변수를 특정 서식에 따라 변환하는 것 </li>
-            <li>템플릿 주석: html 내용 중 주석(숨김)이 필요한 경우 사용 {# 주석처리 할 내용 #}</li>
-        </ul>
-    </ol>
-</body>
-
-</html>
+{% endblock %}

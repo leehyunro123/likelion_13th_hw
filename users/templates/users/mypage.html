@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>마이페이지에 오신 것을 환영합니다</h1>
+<h3>나이가 ...{{user.profile.age}}살..? 흠.</h3>
+<h3>MBTI가 {{user.profile.mbti}}시네여</h3>
+<h3>내 블로그</h3>
+<ul>
+    {% for blog in blogs %}
+        <li>
+            <a href="{% url 'main:detail' blog.id %}">{{blog.title}}</a>
+            <p>작성자 : {{blog.writer}}</p>
+            <p>날짜 : {{blog.pub_date}}</p>
+        </li>
+    {% endfor %}
+{% endblock %}
