@@ -78,7 +78,7 @@ def create2(request):
 
         new_post.save()
 
-        words = new_post.content.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').split(' ')
+        words = new_post.content.split()
         tag_list = []
 
         for w in words:
@@ -127,7 +127,7 @@ def update2(request, id):
         
         update_post.tags.clear() 
 
-        words = update_post.content.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').split(' ')
+        words = update_post.content.split()
         tag_list = []
 
         for w in words:
