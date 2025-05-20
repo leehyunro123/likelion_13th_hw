@@ -67,26 +67,49 @@ def update(request, id):
     return redirect('main:detail', update_blog.id)
 
 def create2(request):
-    new_post = Post()
+    if request.user.is_authenticated:
+        new_post = Post()
 
-    new_post.title = request.POST['title']
-    new_post.writer = request.POST['writer']
-    new_post.content = request.POST['content']
-    new_post.pub_date = timezone.now()
-    new_post.image = request.FILES.get('image')
+        new_post.title = request.POST['title']
+        new_post.writer = request.user
+        new_post.content = request.POST['content']
+        new_post.pub_date = timezone.now()
+        new_post.image = request.FILES.get('image')
 
-    new_post.save()
+        new_post.save()
 
-    return redirect('main:detail', new_post.id)
+        words = new_post.content.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').split(' ')
+        tag_list = []
+
+        for w in words:
+            if len(w) > 0 and w[0] == '#':
+                tag_list.append(w[1:])
+        for t in tag_list:
+            tag, boolean = Tag.objects.get_or_create(name=t)
+            new_post.tags.add(tag.id)
+        return redirect('main:detail2', new_post.id)
+    else:
+        return redirect('account:login')
 
 def new_post(request):
     return render(request, 'main/post.html')
 
 def detail2(request, id):
     post = get_object_or_404(Post, pk=id)
+    if request.method == 'GET':
+        comments = Comment.objects.filter(post=post)
+        return render(request, 'main/detail2.html', {'post': post, 'comments': comments})
+    elif request.method == 'POST':
+        new_comment = Comment()
+        new_comment.post = post
+        new_comment.writer = request.user
+        new_comment.content = request.POST['content']
+        new_comment.pub_date = timezone.now()
+        new_comment.save()
+        return redirect('main:detail2', id)
     post.views += 1
     post.save(update_fields=['views'])
-    return render(request, 'main/detail2.html', {'post': post},)
+    return render(request, 'main/detail2.html', {'post': post})
 
 def edit2(request, id):
     edit_post = Post.objects.get(pk=id)
@@ -94,15 +117,41 @@ def edit2(request, id):
 
 def update2(request, id):
     update_post = Post.objects.get(pk=id)
-    update_post.title = request.POST['title']
-    update_post.writer = request.POST['writer']
-    update_post.content = request.POST['content']
-    update_post.pub_date = timezone.now()
-    update_post.image = request.FILES.get('image')
-    update_post.views = request.POST['views']
-    update_post.save()
+    if request.user.is_authenticated and request.user == update_post.writer:
+        update_post.title = request.POST['title']
+        update_post.content = request.POST['content']
+        update_post.pub_date = timezone.now()
+        update_post.views = request.POST.get('views', update_post.views)
+        if request.FILES.get('image'):
+            update_post.image = request.FILES.get('image')
+        
+        update_post.tags.clear() 
+
+        words = update_post.content.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').split(' ')
+        tag_list = []
+
+        for w in words:
+            if len(w) > 0 and w[0] == '#':
+                tag_list.append(w[1:])
+
+        for t in tag_list:
+            tag, _ = Tag.objects.get_or_create(name=t)
+            update_post.tags.add(tag.id)
+
+        update_post.save()
+        Tag.objects.filter(posts=None).delete()
+        return redirect('main:detail2', update_post.id)
+    return redirect('accounts:login', update_post.id)
 
 def delete(request, id):
     delete_post= Post.objects.get(pk=id)
     delete_post.delete()
     return redirect('main:secondpage')
+
+def tag_list(request):
+    tags = Tag.objects.all()
+    return render(request, 'main/tag-list.html',{'tags': tags})
+def tag_posts(request, tag_id):
+    tag=get_object_or_404(Tag, id=tag_id)
+    posts = tag.posts.all()
+    return render(request, 'main/tag-post.html',{'tag': tag,'posts': posts})
