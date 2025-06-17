@@ -28,6 +28,8 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post/', blank=True, null=True)
     views = models.PositiveIntegerField(default=0, help_text="조회수")
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
+    like=models.ManyToManyField(User, related_name='likes', blank=True)
+    like_count = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.title
     

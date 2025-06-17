@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from .models import *
 # Create your views here.
@@ -36,7 +37,11 @@ def new_blog(request):
 
 def detail(request, id):
     blog = get_object_or_404(Blog, pk=id)
-    return render(request, 'main/detail.html', {'blog': blog},)
+    try:
+        blog_writer = User.objects.get(username=blog.writer)
+    except User.DoesNotExist:
+        blog_writer = None
+    return render(request, 'main/detail.html', {'blog': blog, 'blog_writer': blog_writer},)
 
 def create(request):
     new_blog = Blog()
@@ -155,3 +160,15 @@ def tag_posts(request, tag_id):
     tag=get_object_or_404(Tag, id=tag_id)
     posts = tag.posts.all()
     return render(request, 'main/tag-post.html',{'tag': tag,'posts': posts})
+
+def likes(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.user in post.like.all():
+        post.like.remove(request.user)
+        post.like_count -= 1
+        post.save()
+    else:
+        post.like.add(request.user)
+        post.like_count += 1
+        post.save()
+    return redirect('main:detail2', post.id)

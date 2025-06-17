@@ -31,11 +31,11 @@ def signup(request):
                 username=request.POST['username'],
                 password=request.POST['password']
             )
-            age = request.POST['age']
-            mbti = request.POST['mbti']
+            #age = request.POST['age']
+            #mbti = request.POST['mbti']
 
-            profile = Profile(user=user, age=age, mbti=mbti)
-            profile.save()
+            #profile = Profile(user=user, age=age, mbti=mbti)
+            #profile.save()
             
             auth.login(request, user)
             return redirect('/')

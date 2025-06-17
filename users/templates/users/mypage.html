@@ -2,15 +2,36 @@
 {% load static %}
 {% block content %}
 <h1>마이페이지에 오신 것을 환영합니다</h1>
+User : {{ user }} <br>
+UserProfile : {{ user.profile }} <br>
+
+<p>팔로워수: {{ user.profile.followers.count }}</p>
+<p>팔로잉수: {{ user.profile.followings.count }}</p>
+
+{% if request.user != user %}
+    {% if request.user.profile in user.profile.followers.all %}
+        <a href="{% url 'users:follow' user.id %}">
+            <button type="button" class="btn btn-outline-info">언팔로우</button>
+        </a>
+    {% else %}
+        <a href="{% url 'users:follow' user.id %}">
+            <button type="button" class="btn btn-info">팔로우</button>
+        </a>
+    {% endif %}
+{% endif %}
+
+
+
 <h3>나이가 ...{{user.profile.age}}살..? 흠.</h3>
 <h3>MBTI가 {{user.profile.mbti}}시네여</h3>
-<h3>내 블로그</h3>
+<h3>내 포스트</h3>
 <ul>
-    {% for blog in blogs %}
+    {% for post in posts %}
         <li>
-            <a href="{% url 'main:detail' blog.id %}">{{blog.title}}</a>
-            <p>작성자 : {{blog.writer}}</p>
-            <p>날짜 : {{blog.pub_date}}</p>
+            <a href="{% url 'main:detail2' post.id %}">{{post.title}}</a>
+            <p>작성자 : {{post.writer}}</p>
+            <p>날짜 : {{post.pub_date}}</p>
         </li>
     {% endfor %}
+
 {% endblock %}
